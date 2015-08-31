@@ -1,0 +1,81 @@
+#build Script
+
+g = TitanFactory.open("/usr/local/Cellar/titan-server/0.4.4/libexec/conf/titan-cassandra-es.properties")
+g = TitanFactory.open("/home/mwu/titan-server-0.4.4/conf/titan-cassandra-es.properties")
+
+g.makeKey("Eid").dataType(Long.class).indexed(Vertex.class).make();
+
+g.makeKey("Mid").dataType(Long.class).indexed(Vertex.class).make();
+
+g.makeKey("db").dataType(String.class).indexed(Vertex.class).make();
+
+g.makeKey("Sid").dataType(Long.class).indexed(Vertex.class).make();
+
+g.makeKey("SCORE").dataType(Integer.class).indexed("search",Edge.class).make();
+
+g.makeKey("L_Type").dataType(String.class).indexed("search",Edge.class).make();
+
+
+
+ #add edge
+ edge_script = "g.addEdge(g.v(o_id),g.v(i_id),'Link',[SCORE:link_score])"
+ params = dict(o_id= , i_id= ,link_score= )
+ edges = g.gremlin.query(script,params)
+
+
+ #Gremlin
+
+ CR->CDDB
+ g.V('Eid',57000108092518).outE().map()
+ g.V('Eid',57000108092518).outE().filter{it.SCORE>90 && it.SCORE <95}.map()
+ g.V('Eid',57000108092518).outE().filter{it.SCORE>90 && it.SCORE <95}.inV().map()
+ CDDB->CR
+ g.V('Eid',25073937).map()
+ g.V('Eid',24228640).inE().map()
+ g.V('Eid',24228640).inE().outV().map()
+
+ g.V('Eid',57000000004917).outE().filter{it.SCORE>90 && it.SCORE <95}
+ g.V('Eid',57000000004917).outE().filter{it.SCORE>90 && it.SCORE <95}.outV()
+
+
+ #Rest
+ Vertex
+ http://dms-ps-node-1.globix-sc.gracenote.com:8182/graphs/graph/vertices?key=Eid&value=(l,57000108092518)
+ 22628788
+ Edge:
+ http://dms-ps-node-2.globix-sc.gracenote.com:8182/graphs/graph/vertices/22628788/outE
+ inV:
+ http://dms-ps-node-2.globix-sc.gracenote.com:8182/graphs/graph/vertices/22628788/out
+
+ http://dms-ps-node-1.globix-sc.gracenote.com:8182/graphs/graph/vertices?key=Eid&value=(l,57000003000449)
+ http://dms-ps-node-1.globix-sc.gracenote.com:8182/graphs/graph/vertices/1469256/outE
+ http://dms-ps-node-1.globix-sc.gracenote.com:8182/graphs/graph/vertices/1469256/out
+
+#URL
+http://dms-ps-node-1.globix-sc.gracenote.com:8182/graphs/graph
+http://dms-ps-node-2.globix-sc.gracenote.com:8182/graphs/graph
+
+57000003138509
+57000004152424
+57000005097644
+57000006080276
+57000007014443
+57000008101001
+57000000264888
+57000001161770
+57000002103854
+57000002104578
+
+57000100000000
+57000101000000
+57000102000000
+57000103000000
+57000104000000
+57000105000000
+57000106000000
+57000107000000
+57000108000000
+57000109000000
+57000110000000
+57000111000000
+57000112000000
