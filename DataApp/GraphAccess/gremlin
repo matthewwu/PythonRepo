@@ -2,6 +2,7 @@
 
 g = TitanFactory.open("/usr/local/Cellar/titan-server/0.4.4/libexec/conf/titan-cassandra-es.properties")
 g = TitanFactory.open("/home/mwu/titan-server-0.4.4/conf/titan-cassandra-es.properties")
+g = TitanFactory.open("/usr/local/Cellar/titan-0.5.4-hadoop2/conf/rexster-cassandra-es.xml")
 
 g.makeKey("Eid").dataType(Long.class).indexed(Vertex.class).make();
 
